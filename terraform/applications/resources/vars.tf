@@ -19,3 +19,8 @@ variable "error_document" {
   type = string
   default = "index.html"
 }
+variable "use_acm_email_validation" {
+  description = "controls acm validation method"
+  type = bool
+  default = false
+}
