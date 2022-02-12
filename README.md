@@ -46,8 +46,11 @@ Usage: $bash spa_deploy.sh \<AWS_REGION\> \<AWS_PROFILE\> \<WORKSPACE\> \<DOMAIN
 Ex: $bash spa_deploy.sh us-east-1 profile_prod prod wmexecercise.com 
 
 AWS_REGION: The aws region on which resources are deployed
+
 AWS_PROFILE: The aws profile which has proper permissions to execute the script
+
 WORKSPACE: The terraform workspace for better state management
+
 DOMAIN_NAME: The Domain for SPA
 
 ## Thought process
