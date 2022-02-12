@@ -7,6 +7,7 @@ module "cloudfront" {
   enabled             = true
   is_ipv6_enabled     = true
   price_class         = "PriceClass_All"
+  default_root_object = var.index_document
   retain_on_delete    = false
   wait_for_deployment = true
     web_acl_id = module.waf.web_acl_arn
@@ -14,37 +15,30 @@ module "cloudfront" {
   # This rate is charged only once per month, per metric (up to 8 metrics per distribution).
 #   create_monitoring_subscription = true
 
-#   create_origin_access_identity = true
-#   origin_access_identities = {
-#     comment = "OAI for ${var.domain_name}"
-#   }
+  create_origin_access_identity = true
+  origin_access_identities = {
+    spa_s3_oai = "OAI for ${var.domain_name}"
+  }
 
 
   origin = {
-    # spa = {
-    #   domain_name = module.wm_s3.s3_bucket_website_endpoint
-    #   origin_id   = module.wm_s3.s3_bucket_website_endpoint
-
-    # #   origin_shield = {
-    # #     enabled              = true
-    # #     origin_shield_region = var.region
-    # #   }
-    # }
-    spa = {
-    domain_name = module.wm_s3.s3_bucket_website_endpoint
-    origin_id   = module.wm_s3.s3_bucket_website_endpoint
-      custom_origin_config = {
-        http_port              = 80
-        https_port             = 443
-        origin_protocol_policy = "http-only"
-        origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+    spa_s3 = {
+      domain_name = module.wm_s3.s3_bucket_bucket_regional_domain_name
+      origin_id   = module.wm_s3.s3_bucket_bucket_regional_domain_name
+    s3_origin_config = {
+        origin_access_identity = "spa_s3_oai" # key in `origin_access_identities`
+        # cloudfront_access_identity_path = "origin-access-identity/cloudfront/E5IGQAA1QO48Z" # external OAI resource
+      }
+      origin_shield = {
+        enabled              = true
+        origin_shield_region = var.region
       }
     }
   }
 
 
   default_cache_behavior = {
-    target_origin_id       = module.wm_s3.s3_bucket_website_endpoint
+    target_origin_id       = module.wm_s3.s3_bucket_bucket_regional_domain_name
     viewer_protocol_policy = "redirect-to-https"
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD"]

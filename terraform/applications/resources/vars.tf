@@ -30,3 +30,14 @@ variable "name_prefix" {
   type = string
   default = "SPA"
 }
+
+variable "cors_origins" {
+  description = "The domain which are whitelisted for cors"
+  type = string
+}
+
+variable "cors_methods" {
+  description = "The allowed methods for the cors origins"
+  type = list(string)
+  default = ["GET"]
+}

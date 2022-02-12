@@ -19,8 +19,8 @@ module "wm_s3" {
 
     cors_rule = [
         {
-        allowed_methods = ["GET"]
-        allowed_origins = ["https://example.com"]
+        allowed_methods = var.cors_methods
+        allowed_origins = [var.cors_origins]
         allowed_headers = ["*"]
         expose_headers  = []
         max_age_seconds = 3000

@@ -7,11 +7,12 @@ data "aws_iam_policy_document" "bucket_policy" {
       "s3:GetObject"
     ]
     principals {
-      identifiers = ["*"]
-      type = "AWS"
+      type        = "AWS"
+      identifiers = [module.cloudfront.cloudfront_origin_access_identity_iam_arns[0]]
     }
     resources = [
-      "arn:aws:s3:::${var.domain_name}/*"
+        module.wm_s3.s3_bucket_arn,
+      "${module.wm_s3.s3_bucket_arn}/*"
     ]
   }
 }
