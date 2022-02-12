@@ -9,7 +9,7 @@ module "cloudfront" {
   price_class         = "PriceClass_All"
   retain_on_delete    = false
   wait_for_deployment = true
-
+    web_acl_id = module.waf.web_acl_arn
   # When you enable additional metrics for a distribution, CloudFront sends up to 8 metrics to CloudWatch in the US East (N. Virginia) Region.
   # This rate is charged only once per month, per metric (up to 8 metrics per distribution).
 #   create_monitoring_subscription = true

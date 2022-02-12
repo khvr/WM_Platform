@@ -24,3 +24,9 @@ variable "use_acm_email_validation" {
   type = bool
   default = false
 }
+
+variable "name_prefix" {
+  description = "customize name prefix based of app usecase"
+  type = string
+  default = "SPA"
+}
