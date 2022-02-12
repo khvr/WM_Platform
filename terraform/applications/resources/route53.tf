@@ -22,6 +22,15 @@ module "route53_records" {
       records = [
           "Hello from ${var.domain_name}"
       ]
+    },
+    {
+      name = "" # leave blank for just the domain, execute one record at a time
+      type = "A"
+      alias = {
+        name = module.cloudfront.cloudfront_distribution_domain_name
+        zone_id = module.cloudfront.cloudfront_distribution_hosted_zone_id
+        evaluate_target_health = true
+      }
     }
   ]
   depends_on = [module.zones]
