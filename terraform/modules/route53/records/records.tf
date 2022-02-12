@@ -11,7 +11,7 @@ locals {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone
-data "aws_route53_zone" "ha_aws_route53_zone" {
+data "aws_route53_zone" "aws_route53_zone" {
   count = var.create && (var.zone_id != null || var.zone_name != null) ? 1 : 0
 
   zone_id      = var.zone_id
@@ -20,12 +20,12 @@ data "aws_route53_zone" "ha_aws_route53_zone" {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record
-resource "aws_route53_record" "ha_aws_route53_record" {
+resource "aws_route53_record" "aws_route53_record" {
   for_each = var.create && (var.zone_id != null || var.zone_name != null) ? local.recordsets : tomap({})
 
-  zone_id = data.aws_route53_zone.ha_aws_route53_zone[0].zone_id
+  zone_id = data.aws_route53_zone.aws_route53_zone[0].zone_id
 
-  name                             = each.value.name != "" ? "${each.value.name}.${data.aws_route53_zone.ha_aws_route53_zone[0].name}" : data.aws_route53_zone.ha_aws_route53_zone[0].name
+  name                             = each.value.name != "" ? "${each.value.name}.${data.aws_route53_zone.aws_route53_zone[0].name}" : data.aws_route53_zone.aws_route53_zone[0].name
   type                             = each.value.type
   ttl                              = lookup(each.value, "ttl", null)
   records                          = jsondecode(each.value.records)
@@ -39,7 +39,7 @@ resource "aws_route53_record" "ha_aws_route53_record" {
 
     content {
       name                   = each.value.alias.name
-      zone_id                = try(each.value.alias.zone_id, data.aws_route53_zone.ha_aws_route53_zone[0].zone_id)
+      zone_id                = try(each.value.alias.zone_id, data.aws_route53_zone.aws_route53_zone[0].zone_id)
       evaluate_target_health = lookup(each.value.alias, "evaluate_target_health", false)
     }
   }

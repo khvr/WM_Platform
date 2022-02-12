@@ -1,5 +1,5 @@
 variable "region" {
-  description = "AWS region"
+  description = "Enter AWS region. Eg: us-east-1"
   type        = string
 }
 
@@ -20,9 +20,8 @@ variable "error_document" {
   default = "index.html"
 }
 variable "use_acm_email_validation" {
-  description = "controls acm validation method"
+  description = "To use email for dns validation for acm enter true or enter false. Accepted values[true, false]"
   type = bool
-  default = false
 }
 
 variable "name_prefix" {
@@ -32,7 +31,7 @@ variable "name_prefix" {
 }
 
 variable "cors_origins" {
-  description = "The domain which are whitelisted for cors"
+  description = "The domain which are whitelisted for cors. eg: http://example.com"
   type = string
 }
 
