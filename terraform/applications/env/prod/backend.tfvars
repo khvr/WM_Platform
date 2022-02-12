@@ -1,6 +1,6 @@
-bucket               = "harsha-tf-state-bucket"
+bucket               = "<tf-state-bucket>"
 key                  = "terraform.tfstate"
-region               = "us-east-1"
-dynamodb_table       = "harsha-tf-state-dynamic-lock"
+region               = "<aws-region>"
+dynamodb_table       = "<tf-lock-dynamodb-table>"
 encrypt              = true
 workspace_key_prefix = "spa/prod"
