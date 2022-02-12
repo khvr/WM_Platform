@@ -34,7 +34,7 @@ AWS. You can use Terraform, CloudFormation, CDK, or SAM. Base requirements:
 5. Cloudfront - Reduced latency, WAF acl integration, Improved AWS security and integrates well with AWS resources like S3 and ACM
 ## Assumptions:
 1. The Route 53 hosted zone's nameservers are copied to the respective domain registrars.
-2. The backend s3 configuration is prefilled at WM_Platform/terraform/application/env/prod/backend.tfvars before running the script spa_deploy.sh - replace <tf-state-bucket> with state s3 bucket and "<tf-lock-dynamodb-table>" with Lock table
+2. The backend s3 configuration is prefilled at WM_Platform/terraform/application/env/prod/backend.tfvars before running the script spa_deploy.sh - replace \<tf-state-bucket\> with state s3 bucket and "\<tf-lock-dynamodb-table\>" with Lock table
 3. No Manual step is required on AWS
 
 ## Script
